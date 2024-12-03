@@ -3,7 +3,7 @@ import numpy as np
 
 import scipy.stats as stats
 
-df = pd.read_csv("wetter.csv")
+df = pd.read_csv("../0_DataPreparation/wetter.csv")
 
 # extract temperature column and find average temperature
 

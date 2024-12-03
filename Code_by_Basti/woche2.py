@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_csv("umsatzdaten_gekuerzt.csv")
+df = pd.read_csv("../0_DataPreparation/umsatzdaten_gekuerzt.csv")
 
 # add weekdays to dataset (not needed in fact but its needed for the 
 # other solution with the for loop)

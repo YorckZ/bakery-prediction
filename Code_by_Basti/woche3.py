@@ -1,8 +1,8 @@
 import pandas as pd
 
-weather = pd.read_csv("wetter.csv")
-kiwo = pd.read_csv("kiwo.csv")
-turnover = pd.read_csv("umsatzdaten_gekuerzt.csv")
+weather = pd.read_csv("../0_DataPreparation/wetter.csv")
+kiwo = pd.read_csv("../0_DataPreparation/kiwo.csv")
+turnover = pd.read_csv("../0_DataPreparation/umsatzdaten_gekuerzt.csv")
 
 df = pd.merge(weather, turnover, on='Datum', how='outer')
 

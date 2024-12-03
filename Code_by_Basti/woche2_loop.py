@@ -4,7 +4,7 @@ import scipy.stats as stats
 import matplotlib.pyplot as plt
 
 # Load your data
-data = pd.read_csv("umsatzdaten_gekuerzt.csv")
+data = pd.read_csv("../0_DataPreparation/umsatzdaten_gekuerzt.csv")
 
 # add weekdays to dataset (not needed in fact)
 
