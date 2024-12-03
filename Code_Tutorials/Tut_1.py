@@ -1,8 +1,12 @@
+# Folie 14
+# Beispiel eines Linearen Modells
+
 import pandas as pd
 import statsmodels.formula.api as smf
 
 # Load the dataset
-url = "https://raw.githubusercontent.com/opencampus-sh/einfuehrung-in-data-science-undml/main/house_pricing_data/house_pricing_train.csv"
+# url = "https://raw.githubusercontent.com/opencampus-sh/einfuehrung-in-data-science-undml/main/house_pricing_data/house_pricing_train.csv"
+url = "house_pricing_train.csv"
 house_pricing = pd.read_csv(url)
 
 # Fit the linear model
