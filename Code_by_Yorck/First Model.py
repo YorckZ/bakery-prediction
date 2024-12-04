@@ -39,3 +39,11 @@ print("Model Coefficient:", model.coef_[0])
 print("Model Intercept:", model.intercept_)
 print("Mean Squared Error:", mse)
 print("R-squared:", r2)
+
+# Define the temperature value
+input_temperature = [[20]]  # Replace 20 with the desired temperature
+
+# Make a prediction
+predicted_umsatz = model.predict(input_temperature)
+
+print(f"Predicted Umsatz for temperature {input_temperature[0][0]}: {predicted_umsatz[0]}")
