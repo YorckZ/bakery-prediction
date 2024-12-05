@@ -2,10 +2,11 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.compose import ColumnTransformer
+# from sklearn.preprocessing import OneHotEncoder
+# from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
+
 
 # Load data
 umsatzdaten_file = '../0_DataPreparation/umsatzdaten_gekuerzt.csv'
@@ -20,13 +21,10 @@ merged_df = pd.merge(umsatzdaten_df, wetter_df, on='Datum', how='inner')
 # Drop rows with missing values
 merged_df = merged_df.dropna()
 
-# Extract date-related features
-merged_df['Datum'] = pd.to_datetime(merged_df['Datum'])
-merged_df['DayOfYear'] = merged_df['Datum'].dt.dayofyear
-merged_df['Weekday'] = merged_df['Datum'].dt.weekday
+# Ensure the data is sorted by date
+merged_df = merged_df.sort_values(by='Datum')
 
 # Select features and target variable
-# X = merged_df[['DayOfYear', 'Weekday', 'Windgeschwindigkeit']]  # Features
 X = merged_df[['Temperatur', 'Windgeschwindigkeit']]  # Features
 y = merged_df['Umsatz']  # Target
 
@@ -56,7 +54,6 @@ print("Mean Squared Error:", mse)
 print("R-squared:", r2)
 
 # Example: Predict Umsatz for a specific date and wind speed
-example_input = [[2, 4]]  # Day of Year 150, Weekday 2 (Tuesday), Windgeschwindigkeit 15
-predicted_umsatz = pipeline.predict([example_input])
-
+example_input = pd.DataFrame([[10, 0]], columns=['Temperatur', 'Windgeschwindigkeit'])
+predicted_umsatz = pipeline.predict(example_input)
 print(f"Predicted Umsatz: {predicted_umsatz[0]}")

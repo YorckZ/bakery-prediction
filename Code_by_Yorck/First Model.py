@@ -1,8 +1,9 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
-import matplotlib.pyplot as plt
+
 
 # Load data
 umsatzdaten_file = '../0_DataPreparation/umsatzdaten_gekuerzt.csv'
@@ -17,6 +18,19 @@ merged_df = pd.merge(umsatzdaten_df, wetter_df, on='Datum', how='inner')
 
 # Drop rows with missing values
 merged_df = merged_df.dropna()
+
+# Convert to datetime if not already
+merged_df['Datum'] = pd.to_datetime(merged_df['Datum'])
+
+# Ensure the data is sorted by date
+merged_df = merged_df.sort_values(by='Datum')
+
+# Define your date thresholds
+train_end_date = '2017-07-31'
+
+# Split the data based on the date thresholds
+train_data = merged_df[merged_df['Datum'] <= train_end_date]
+validation_data = merged_df[(merged_df['Datum'] > train_end_date)]
 
 # Select feature and target variable
 X = merged_df[['Temperatur']]  # Feature
@@ -42,12 +56,10 @@ print("Model Intercept:", model.intercept_)
 print("Mean Squared Error:", mse)
 print("R-squared:", r2)
 
-
 # Predict sales for a single temperature value
 # input_temperature = [[20]]
 # predicted_umsatz = model.predict(input_temperature)
 # print(f"Predicted Umsatz for temperature {input_temperature[0][0]}: {predicted_umsatz[0]}")
-
 
 # Predict sales for temperature values 0 to 30
 results = {}
@@ -55,12 +67,8 @@ for i in range(31):
     input_temperature = pd.DataFrame([[i]], columns=['Temperatur'])
     predicted_umsatz = model.predict(input_temperature)
     results[i] = round(predicted_umsatz[0], 2)
-    # print(i, predicted_umsatz[0])
-# print(results)
-
 
 # Visualize predictions on a matplotlib
-# Extract x and y values from results
 x_values = list(results.keys())
 y_values = list(results.values())
 
