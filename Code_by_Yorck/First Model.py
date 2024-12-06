@@ -32,18 +32,18 @@ train_end_date = '2017-07-31'
 train_data = merged_df[merged_df['Datum'] <= train_end_date]
 validation_data = merged_df[(merged_df['Datum'] > train_end_date)]
 
-# Select feature and target variable
-X = merged_df[['Temperatur']]  # Feature
-y = merged_df['Umsatz']  # Target
+# Define training and validation datasets
+X_train = train_data[['Temperatur']]  # Feature for training
+y_train = train_data['Umsatz']       # Target for training
 
-# Split data into training and test sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_test = validation_data[['Temperatur']]  # Feature for validation
+y_test = validation_data['Umsatz']        # Target for validation
 
 # Create and train the linear regression model
 model = LinearRegression()
 model.fit(X_train, y_train)
 
-# Make predictions
+# Make predictions on validation data
 y_pred = model.predict(X_test)
 
 # Evaluate the model

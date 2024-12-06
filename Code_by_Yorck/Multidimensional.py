@@ -24,12 +24,17 @@ merged_df = merged_df.dropna()
 # Ensure the data is sorted by date
 merged_df = merged_df.sort_values(by='Datum')
 
-# Select features and target variable
-X = merged_df[['Temperatur', 'Windgeschwindigkeit']]  # Features
-y = merged_df['Umsatz']  # Target
+# Define training and validation datasets
+train_end_date = '2017-07-31'
+train_data = merged_df[merged_df['Datum'] <= train_end_date]
+validation_data = merged_df[(merged_df['Datum'] > train_end_date)]
 
-# Split data into training and test sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+# Select features and target variable for training and validation
+X_train = train_data[['Temperatur', 'Windgeschwindigkeit']]  # Features for training
+y_train = train_data['Umsatz']                               # Target for training
+
+X_test = validation_data[['Temperatur', 'Windgeschwindigkeit']]  # Features for validation
+y_test = validation_data['Umsatz']                              # Target for validation
 
 # Create a pipeline to handle preprocessing and regression
 pipeline = Pipeline(steps=[
@@ -40,7 +45,7 @@ pipeline = Pipeline(steps=[
 # Train the model
 pipeline.fit(X_train, y_train)
 
-# Make predictions
+# Make predictions on validation data
 y_pred = pipeline.predict(X_test)
 
 # Evaluate the model
